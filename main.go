@@ -24,6 +24,7 @@ func main() {
 	checkFile(err)
 
 	outStr := ""
+	dn := "dn: "
 	var restOfLines []string
 	fileScanner.Scan()
 	firstLine := fileScanner.Text()
@@ -40,10 +41,20 @@ func main() {
 		splitValues := strings.Split(line, ";")
 
 		for i := 0; i < len(firstLineValues); i++ {
+			switch firstLineValues[i] {
+			case "uid":
+				dn += firstLineValues[i] + "=" + splitValues[i]
+			case "ou":
+				dn += firstLineValues[i] + "=" + splitValues[i]
+			case "dc":
+				dn += firstLineValues[i] + "=" + splitValues[i]
+			}
 			if splitValues[i] != "" {
 				outStr += firstLineValues[i] + ": " + splitValues[i] + "\n"
 			}
 		}
+		outStr += dn
+		dn = "dn: "
 	}
 
 	out.WriteString(outStr)

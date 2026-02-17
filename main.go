@@ -30,8 +30,9 @@ func main() {
 	var out string
 	for j := 0; j < len(totalVals); j++ {
 		for i := 0; i < len(keys); i++ {
-			out += keys[i] + ": " + totalVals[j][i] + "\n"
+			out += strings.Trim(keys[i], " ") + ": " + strings.Trim(totalVals[j][i], " ") + "\n"
 		}
+		out += "\n"
 	}
 
 	fmt.Println(out)

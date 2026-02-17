@@ -21,19 +21,17 @@ func main() {
 
 	//https://www.bytesizego.com/blog/reading-file-line-by-line-golang
 	keys := strings.Split(scanner.Text(), ";")
-	fmt.Println(keys)
 
 	var totalVals [][]string
 	for scanner.Scan() {
 		vals := strings.Split(scanner.Text(), ";")
 		totalVals = append(totalVals, vals)
-		totalVals = append(totalVals, vals)
 	}
-	fmt.Println(keys)
-	fmt.Println(totalVals)
 	var out string
-	for i := 0; i < len(keys); i++ {
-		out += keys[i] + ": " + totalVals[i][i] + "\n"
+	for j := 0; j < len(totalVals); j++ {
+		for i := 0; i < len(keys); i++ {
+			out += keys[i] + ": " + totalVals[j][i] + "\n"
+		}
 	}
 
 	fmt.Println(out)

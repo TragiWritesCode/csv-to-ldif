@@ -27,15 +27,25 @@ func main() {
 		vals := strings.Split(scanner.Text(), ";")
 		totalVals = append(totalVals, vals)
 	}
-	var out string
-	for j := 0; j < len(totalVals); j++ {
-		for i := 0; i < len(keys); i++ {
-			out += strings.Trim(keys[i], " ") + ": " + strings.Trim(totalVals[j][i], " ") + "\n"
-		}
-		out += "\n"
+	fileInfo, err := os.Stat("test.csv")
+
+	if err != nil {
+		check(err)
 	}
 
-	fmt.Println(out)
+	var out strings.Builder
+	out.Grow(int(fileInfo.Size()))
+	for j := 0; j < len(totalVals); j++ {
+		for i := 0; i < len(keys); i++ {
+			out.WriteString(strings.Trim(keys[i], " "))
+			out.WriteString(": ")
+			out.WriteString(strings.Trim(totalVals[j][i], " "))
+			out.WriteString("\n")
+		}
+		out.WriteString("\n")
+	}
+
+	fmt.Println(out.String())
 
 	csvFile.Close()
 

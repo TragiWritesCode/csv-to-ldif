@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"os"
 	"strings"
 )
@@ -25,17 +26,30 @@ func main() {
 	for scanner.Scan() {
 		vals = append(vals, strings.Split(strings.Trim(scanner.Text(), " "), ";")...)
 	}
-	var out string
+
+	fileInfo, err := os.Stat("test.csv")
+
+	if err != nil {
+		check(err)
+	}
+
+	var out strings.Builder
+	out.Grow(int(fileInfo.Size()))
+
 	i := 0
 	for j := 0; j < len(vals); j++ {
-		out += keys[i] + ": " + vals[j] + "\n"
+		out.WriteString(keys[i])
+		out.WriteString(": ")
+		out.WriteString(vals[j])
+		out.WriteString("\n")
 		i++
 		if i == len(keys) {
 			i = 0
+			out.WriteString("\n")
 		}
 	}
 
-	//	fmt.Println(out)
+	fmt.Println(out.String())
 
 	csvFile.Close()
 
